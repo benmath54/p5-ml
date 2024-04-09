@@ -394,8 +394,8 @@ private:
       Node* vertex = new Node;
       return vertex;
     }
-    if(less(query,node->datum)){return find_impl(node->left);}
-    else{return find_impl(node->right);}
+    if(less(query,node->datum)){return find_impl(node->left,query,less);}
+    else{return find_impl(node->right,query,less);}
   }
 
   // REQUIRES: item is not already contained in the tree rooted at 'node'
@@ -414,7 +414,17 @@ private:
   //       template, NOT according to the < operator. Use the "less"
   //       parameter to compare elements.
   static Node * insert_impl(Node *node, const T &item, Compare less) {
-    if(find_impl(node,query,less) != nullptr){return nullptr;}
+    if(find_impl(node,item,less) != nullptr){return nullptr;}
+
+    if(node == nullptr){
+      Node* leaf = new Node;
+      leaf->datum = item;
+      leaf->right = leaf->left = nullptr;
+      return leaf;
+    }
+
+    if(less(item,node->datum)){return insert_impl(node-left,item,less);}
+    else{return insert_impl(node->right,item,less);}
   }
 
   // EFFECTS : Returns a pointer to the Node containing the minimum element
