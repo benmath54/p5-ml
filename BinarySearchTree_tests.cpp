@@ -95,12 +95,69 @@ TEST(test_insert){
     ASSERT_TRUE(*tree.find("really cool string") == "really cool string");
 }
 
+TEST(test_check_sorting){
+    BinarySearchTree<int> tree;
+    tree.insert(5);
+    tree.insert(6);
+    ASSERT_TRUE(tree.check_sorting_invariant()); 
+    BinarySearchTree<int>::Iterator it1 = tree.find(6);
+    *it1 = 5;
+    ASSERT_FALSE(tree.check_sorting_invariant()); 
+
+    *it1 = 1;
+    ASSERT_FALSE(tree.check_sorting_invariant()); 
+    *it1 = 8;
+    tree.insert(0);
+    it1 = tree.find(0);
+    *it1 = 100;
+    ASSERT_FALSE(tree.check_sorting_invariant()); 
+    *it1 = 0;
+
+    BinarySearchTree<int> tree2;
+    it1 = tree2.insert(6);
+    BinarySearchTree<int>::Iterator it2 = tree2.begin();
+    ASSERT_TRUE(it1 == it2);
+    *it1 = 100;
+    ASSERT_TRUE(tree.check_sorting_invariant());
+}
+
+TEST(test_trav_in_order){
+    BinarySearchTree<char> tree;
+    tree.insert('f');
+    tree.insert('b');
+    tree.insert('g');
+    tree.insert('a');
+    tree.insert('d');
+    tree.insert('c');
+    tree.insert('e');
+    tree.insert('i');
+    tree.insert('h');
+
+    cout << tree.to_string();
+    ostringstream oss_inorder;
+    tree.traverse_inorder(oss_inorder);
+    ASSERT_TRUE(oss_inorder.str() == "a b c d e f g h i ");
+}
+
+TEST(test_trav_preorder){
+    BinarySearchTree<char> tree;
+    tree.insert('f');
+    tree.insert('b');
+    tree.insert('g');
+    tree.insert('a');
+    tree.insert('d');
+    tree.insert('c');
+    tree.insert('e');
+    tree.insert('i');
+    tree.insert('h');
+
+    cout << tree.to_string();
+    ostringstream oss_preorder;
+    tree.traverse_preorder(oss_preorder);
+    ASSERT_TRUE(oss_preorder.str() == "f b a d c e g i h ");
+}
+
 /*
-min
-max
-check sorting
-traverse in order
-traverse preorder
 min greater than
 */
 

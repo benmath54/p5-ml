@@ -6,7 +6,7 @@
       "name": "(gdb) Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/BinarySearchTree_compile_check.exe",
+      "program": "${workspaceFolder}/BinarySearchTree_tests.exe",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${fileDirname}",
