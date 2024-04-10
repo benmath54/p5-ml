@@ -393,7 +393,7 @@ private:
   static Node * find_impl(Node *node, const T &query, Compare less) {
     if(node == nullptr){return nullptr;}
     if((!less(query,node->datum))&&(!less(node->datum,query))){
-      Node* vertex = new Node;
+      Node* vertex = node;
       return vertex;
     }
     if(less(query,node->datum)){return find_impl(node->left,query,less);}
@@ -426,14 +426,14 @@ private:
     }
 
     if(less(item,node->datum)){
-      Node* leaf = new Node;
+      Node* leaf;
       leaf = insert_impl(node->left,item,less);
       if(leaf != nullptr){
         node->left = leaf;
       }
     }
     else{
-      Node* leaf = new Node;
+      Node* leaf;
       leaf = insert_impl(node->right,item,less);
       if(leaf != nullptr){
         node->right = leaf;
@@ -452,10 +452,7 @@ private:
   static Node * min_element_impl(Node *node) {
     if(node == nullptr){return nullptr;}
     if(node->left == nullptr){
-      Node* leaf = new Node;
-      leaf->datum = node->datum;
-      leaf->left = node->left;
-      leaf->right = node->right;
+      Node* leaf = node;
       return leaf;
     }
     return min_element_impl(node->left);
@@ -469,10 +466,7 @@ private:
   static Node * max_element_impl(Node *node) {
     if(node == nullptr){return nullptr;}
     if(node->right == nullptr){
-      Node* leaf = new Node;
-      leaf->datum = node->datum;
-      leaf->left = node->left;
-      leaf->right = node->right;
+      Node* leaf = node;
       return leaf;
     }
     return max_element_impl(node->right);

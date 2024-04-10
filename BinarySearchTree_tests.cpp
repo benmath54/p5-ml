@@ -1,5 +1,7 @@
 #include "BinarySearchTree.hpp"
 #include "unit_test_framework.hpp"
+#include <iostream>
+using namespace std;
 
 
 TEST(test_empty) {
@@ -59,9 +61,41 @@ TEST(test_assignment){
     ASSERT_TRUE(tree2.find(5) != tree.find(5));
     ASSERT_TRUE(tree2.find(3) == tree.find(3));
 }
+
+TEST(test_find){
+    BinarySearchTree<int> tree;
+    tree.insert(5);
+    tree.insert(6);
+    tree.insert(7);
+    tree.insert(8);
+
+    ASSERT_TRUE(tree.find(19) == tree.end());
+    ASSERT_TRUE(tree.find(8) == tree.max_element());
+
+    tree.insert(19);
+    ASSERT_TRUE(tree.find(19) != tree.end());
+    ASSERT_TRUE(tree.find(8) != tree.max_element());
+
+    ASSERT_TRUE(tree.find(5) == tree.min_element());
+
+    ASSERT_TRUE(tree.find(6) == tree.min_greater_than(5));
+
+    BinarySearchTree<int> tree2;
+
+    ASSERT_TRUE(tree2.find(0) == tree2.end());
+    ASSERT_TRUE(tree.find(0) == tree2.end());
+}
+
+TEST(test_insert){
+    BinarySearchTree<string> tree;
+
+    tree.insert("really cool string");
+    tree.insert("not so cool string");
+
+    ASSERT_TRUE(*tree.find("really cool string") == "really cool string");
+}
+
 /*
-find
-insert
 min
 max
 check sorting

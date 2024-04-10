@@ -6,6 +6,7 @@ CXX ?= g++
 
 # Compiler flags
 CXXFLAGS ?= --std=c++17 -Wall -Werror -pedantic -g -Wno-sign-compare -Wno-comment
+CXXFLAGS += -fsanitize=address
 
 # Run a regression test
 test: BinarySearchTree_compile_check.exe \
