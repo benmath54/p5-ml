@@ -196,5 +196,24 @@ TEST(test_empty_bst){
     ASSERT_TRUE(tree.begin() == tree.end());
 }
 
+TEST(test_pp){
+    BinarySearchTree<char> tree;
+    tree.insert('f');
+    tree.insert('b');
+    tree.insert('g');
+    tree.insert('a');
+    tree.insert('d');
+    tree.insert('c');
+    tree.insert('e');
+    tree.insert('i');
+    tree.insert('h');
+    BinarySearchTree<char>::Iterator it1 = tree.begin();
+    for(char c = 'a'; c <= 'f'; c++){
+        cout << *it1 << " ";
+        ASSERT_TRUE(c == *it1);
+        it1++;
+    }
+}
+
 
 TEST_MAIN()

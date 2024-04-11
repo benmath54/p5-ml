@@ -529,7 +529,7 @@ private:
   static Node * min_greater_than_impl(Node *node, const T &val, Compare less) {
     if(node == nullptr){return nullptr;}
     Node* leaf;
-    if(less(val,node->datum)){
+    if(less(val,node->datum)&& min_greater_than_impl(node->left,val,less) == nullptr){
       Node* mgt = node;
       return mgt;
     }
