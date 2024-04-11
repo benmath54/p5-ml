@@ -70,6 +70,7 @@ TEST(test_find){
     tree.insert(8);
 
     ASSERT_TRUE(tree.find(19) == tree.end());
+    ASSERT_TRUE(tree.find(19) == tree.min_greater_than(19));
     ASSERT_TRUE(tree.find(8) == tree.max_element());
 
     tree.insert(19);
@@ -193,7 +194,7 @@ TEST(test_empty_bst){
     ASSERT_TRUE(tree.min_greater_than(5) == tree.end());
     ASSERT_TRUE(tree.find(4) == tree.end());
     ASSERT_TRUE(tree.begin() == tree.end());
-
 }
+
 
 TEST_MAIN()
