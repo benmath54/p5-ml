@@ -176,8 +176,24 @@ TEST(test_min_gt_map){
     cout << tree << endl;
 }
 
-/*
-min greater than
-*/
+TEST(test_empty_bst){
+    BinarySearchTree<int> tree;
+    ostringstream oss_preorder;
+    tree.traverse_preorder(oss_preorder);
+    string pre = oss_preorder.str();
+    ASSERT_TRUE(pre.empty());
+    ostringstream oss_inorder;
+    tree.traverse_inorder(oss_inorder);
+    pre = oss_inorder.str();
+    ASSERT_TRUE(pre.empty());
+
+    ASSERT_TRUE(tree.check_sorting_invariant());
+    ASSERT_TRUE(tree.max_element() == tree.end());
+    ASSERT_TRUE(tree.min_element() == tree.end());
+    ASSERT_TRUE(tree.min_greater_than(5) == tree.end());
+    ASSERT_TRUE(tree.find(4) == tree.end());
+    ASSERT_TRUE(tree.begin() == tree.end());
+
+}
 
 TEST_MAIN()

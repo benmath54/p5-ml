@@ -109,7 +109,7 @@ public:
     else{
       Pair_type pr;
       pr.first = k;
-      pr.second = 0;
+      pr.second = Value_type();
       _size++;
       it1 = bst.insert(pr);
       return (*it1).second;
