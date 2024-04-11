@@ -32,6 +32,10 @@ private:
 
   // A custom comparator
   class PairComp {
+    private:
+    //TODO key compare
+    public:
+    //TODO operator()
   };
 
 public:
@@ -53,19 +57,16 @@ public:
   // in the appropriate order for the Map.
   using Iterator = typename BinarySearchTree<Pair_type, PairComp>::Iterator;
 
-  // You should add in a default constructor, destructor, copy
-  // constructor, and overloaded assignment operator, if appropriate.
-  // If these operations will work correctly without defining them,
-  // you should omit them. A user of the class must be able to create,
-  // copy, assign, and destroy Maps.
-
-
   // EFFECTS : Returns whether this Map is empty.
-  bool empty() const;
+  bool empty() const{
+    return bst.empty();
+  }
 
   // EFFECTS : Returns the number of elements in this Map.
   // NOTE : size_t is an integral type from the STL
-  size_t size() const;
+  size_t size() const{
+    return _size;
+  }
 
   // EFFECTS : Searches this Map for an element with a key equivalent
   //           to k and returns an Iterator to the associated value if found,
@@ -74,7 +75,7 @@ public:
   // HINT: Since Map is implemented using a BinarySearchTree that stores
   //       (key, value) pairs, you'll need to construct a dummy value
   //       using "Value_type()".
-  Iterator find(const Key_type& k) const;
+  Iterator find(const Key_type& k) const;  
 
   // MODIFIES: this
   // EFFECTS : Returns a reference to the mapped value for the given
@@ -105,13 +106,18 @@ public:
   std::pair<Iterator, bool> insert(const Pair_type &val);
 
   // EFFECTS : Returns an iterator to the first key-value pair in this Map.
-  Iterator begin() const;
+  Iterator begin() const{
+    return bst.begin();
+  }
 
   // EFFECTS : Returns an iterator to "past-the-end".
-  Iterator end() const;
+  Iterator end() const{
+    return bst.end();
+  }
 
 private:
-  // Add a BinarySearchTree private member HERE.
+  BinarySearchTree<Pair_type, PairComp> bst;
+  size_t _size;
 };
 
 // You may implement member functions below using an "out-of-line" definition
