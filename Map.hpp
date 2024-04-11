@@ -18,6 +18,7 @@
 #include "BinarySearchTree.hpp"
 #include <cassert>  //assert
 #include <utility>  //pair
+using namespace std;
 
 template <typename Key_type, typename Value_type,
           typename Key_compare=std::less<Key_type> // default argument
@@ -33,9 +34,11 @@ private:
   // A custom comparator
   class PairComp {
     private:
-    //TODO key compare
+    Key_compare kcomp;
     public:
-    //TODO operator()
+    bool operator()(Pair_type p1, Pair_type p2) const{
+      return kcomp(p1.first,p2.first);
+    }
   };
 
 public:
@@ -75,7 +78,12 @@ public:
   // HINT: Since Map is implemented using a BinarySearchTree that stores
   //       (key, value) pairs, you'll need to construct a dummy value
   //       using "Value_type()".
-  Iterator find(const Key_type& k) const;  
+  Iterator find(const Key_type& k) const{
+    Pair_type pr;
+    pr.first = k;
+    pr.second = Value_type();
+    return bst.find(pr);
+  }
 
   // MODIFIES: this
   // EFFECTS : Returns a reference to the mapped value for the given
@@ -93,7 +101,20 @@ public:
   //           that element. This ensures the proper value-initialization is done.
   //
   // HINT: http://www.cplusplus.com/reference/map/map/operator[]/
-  Value_type& operator[](const Key_type& k);
+  Value_type& operator[](const Key_type& k){
+    Iterator it1 = find(k);
+    if(it1 != bst.end()){
+      return (*it1).second;
+    }
+    else{
+      Pair_type pr;
+      pr.first = k;
+      pr.second = 0;
+      _size++;
+      it1 = bst.insert(pr);
+      return (*it1).second;
+    }
+  }
 
   // MODIFIES: this
   // EFFECTS : Inserts the given element into this Map if the given key
@@ -103,7 +124,21 @@ public:
   //           false. Otherwise, inserts the given element and returns
   //           an iterator to the newly inserted element, along with
   //           the value true.
-  std::pair<Iterator, bool> insert(const Pair_type &val);
+  std::pair<Iterator, bool> insert(const Pair_type &val){
+    if(bst.find(val) == bst.end()){
+      _size++;
+      pair<Iterator, bool> p;
+      p.first = bst.insert(val);
+      p.second = true;
+      return p;
+    }
+    else{
+      pair<Iterator, bool> p;
+      p.first = bst.find(val);
+      p.second = false;
+      return p;
+    }
+  }
 
   // EFFECTS : Returns an iterator to the first key-value pair in this Map.
   Iterator begin() const{
@@ -119,16 +154,5 @@ private:
   BinarySearchTree<Pair_type, PairComp> bst;
   size_t _size;
 };
-
-// You may implement member functions below using an "out-of-line" definition
-// or you may simply define them "in-line" in the class definition above.
-// If you choose to define them "out-of-line", here is an example.
-// (Note that we're using K, V, and C as shorthands for Key_type,
-// Value_type, and Key_compare, respectively - the compiler doesn't
-// mind, and will just match them up by position.)
-//    template <typename K, typename V, typename C>
-//    typename Map<K, V, C>::Iterator Map<K, V, C>::begin() const {
-//      // YOUR IMPLEMENTATION GOES HERE
-//    }
 
 #endif // DO NOT REMOVE!!!

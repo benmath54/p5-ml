@@ -78,7 +78,11 @@ TEST(test_find){
 
     ASSERT_TRUE(tree.find(5) == tree.min_element());
 
-    ASSERT_TRUE(tree.find(6) == tree.min_greater_than(5));
+    BinarySearchTree<int>::Iterator it1 = tree.find(6);
+    BinarySearchTree<int>::Iterator it2 = tree.min_greater_than(5);
+    cout << *it1 << endl;
+
+    ASSERT_TRUE(it2 == it1);
 
     BinarySearchTree<int> tree2;
 
@@ -155,6 +159,21 @@ TEST(test_trav_preorder){
     ostringstream oss_preorder;
     tree.traverse_preorder(oss_preorder);
     ASSERT_TRUE(oss_preorder.str() == "f b a d c e g i h ");
+}
+
+TEST(test_min_gt_map){
+    BinarySearchTree<string> tree;
+    tree.insert("hello");
+    tree.insert("pi");
+    tree.insert("world");
+    BinarySearchTree<string>::Iterator it1 = tree.find("hello");
+    ASSERT_EQUAL(*it1,"hello");
+    it1++;
+    ASSERT_EQUAL(*it1,"pi");
+    it1++;
+    ASSERT_EQUAL(*it1,"world");
+
+    cout << tree << endl;
 }
 
 /*

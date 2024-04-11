@@ -535,9 +535,12 @@ private:
     }
 
     if(less(node->datum,val)){
-      leaf = min_greater_than_impl(node->left,val,less);
+      leaf = min_greater_than_impl(node->right,val,less);
     }
-    else{leaf = min_greater_than_impl(node->right,val,less);}
+    else if(!less(node->datum,val) && !less(val,node->datum)){
+      leaf = min_greater_than_impl(node->right,val,less);
+    }
+    else{leaf = min_greater_than_impl(node->left,val,less);}
 
     if(leaf != nullptr){return leaf;}
     else{return nullptr;}
