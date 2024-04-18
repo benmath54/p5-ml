@@ -211,6 +211,7 @@ class Classifier{
 
     //fuction to abstract the printing from main
     void print_func_debug(int argc){
+        cout << "trained on " << total_posts() << " examples" << endl << endl;
         if(argc == 4){
             cout << "vocabulary size = " << num_unique_words() << endl; 
         }
@@ -223,6 +224,7 @@ class Classifier{
             class_param_print();
             cout << endl;
         }
+        cout << "test data:" << endl;
     }
 
     
@@ -268,10 +270,8 @@ while(traing_data >> row){
         cout <<"content = " << content << endl;
     }
 }
-cout << "trained on " << classifier.total_posts() << " examples" << endl << endl;
 
-if(argc == 4){classifier.print_func_debug(argc);}
-cout << "test data:" << endl;
+classifier.print_func_debug(argc);
 csvstream test_data(argv[2]);
 
 //This loop is the one that intakes the test data and outputs the guesses
