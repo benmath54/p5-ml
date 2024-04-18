@@ -215,6 +215,52 @@ TEST(test_pp){
     }
 }
 
+TEST(test_assignment_error16){
+    BinarySearchTree<int> tree;
+    BinarySearchTree<int> tree2(tree);
+
+    BinarySearchTree<int>::Iterator it1 = tree2.begin();
+    BinarySearchTree<int>::Iterator it2 = tree.begin();
+    ASSERT_EQUAL(it1,it2);
+
+    ASSERT_EQUAL(tree.begin(),tree2.begin());
+
+    tree2.insert(5);
+    tree2.insert(8);
+    tree2.insert(6);
+    tree2.insert(9);
+
+    it1 = tree2.begin();
+    ASSERT_EQUAL(*it1,5);
+
+    tree.insert(5);
+    it2 = tree.begin();
+
+    ASSERT_NOT_EQUAL(it1,it2);
+    ASSERT_EQUAL(*it1,*it2);
+
+    BinarySearchTree<int> tree3(tree);
+
+    it1 = tree3.begin();
+
+    ASSERT_EQUAL(*it1,*it2);
+
+    BinarySearchTree<int> tree4;
+
+    ostringstream oss_preorder;
+    tree4.traverse_preorder(oss_preorder);
+    string pre = oss_preorder.str();    
+
+    cout << pre << endl;
+    ASSERT_TRUE(pre.empty());
+
+    tree4.traverse_inorder(oss_preorder);
+    string trav = oss_preorder.str();
+
+    cout << pre << endl;
+    ASSERT_TRUE(pre.empty());
+}
+
 // COPY CTOR
 
 TEST_MAIN()
