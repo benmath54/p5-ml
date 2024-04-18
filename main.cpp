@@ -209,6 +209,27 @@ class Classifier{
         return guess;
     }
 
+    //fuction to abstract the printing from main
+    void print_func_debug(int argc){
+        cout << "trained on " << total_posts() << " examples" << endl;
+        if(argc == 4){
+            cout << "vocabulary size = " << num_unique_words() << endl; 
+        }
+        cout << endl;
+
+        if(argc == 4){
+            cout << "classes:" << endl;
+            label_print();
+            cout << "classifier parameters:" << endl;
+            class_param_print();
+            cout << endl;
+        }
+
+        cout << "test data:" << endl;
+    }
+
+    
+
 };
 
 int main(int argc, char *argv[]){
@@ -230,9 +251,7 @@ if(argc == 4){
 
 //intakes training csv and creates needed map and classifier
 csvstream traing_data(argv[1]);
-
 map<string,string> row;
-
 Classifier classifier;
 
 if(argc == 4){
@@ -248,28 +267,12 @@ while(traing_data >> row){
     classifier.train(content,tag);
 
     if(argc == 4){
-        cout <<"  ";
-        cout << "label = " << tag << ", ";
+        cout <<"  " << "label = " << tag << ", ";
         cout <<"content = " << content << endl;
     }
 }
 
-// debug outputs
-cout << "trained on " << classifier.total_posts() << " examples" << endl;
-if(argc == 4){
-cout << "vocabulary size = " << classifier.num_unique_words() << endl; 
-}
-cout << endl;
-
-if(argc == 4){
-    cout << "classes:" << endl;
-    classifier.label_print();
-    cout << "classifier parameters:" << endl;
-    classifier.class_param_print();
-    cout << endl;
-}
-
-cout << "test data:" << endl;
+if(argc == 3){classifier.print_func_debug(argc);}
 csvstream test_data(argv[2]);
 
 //This loop is the one that intakes the test data and outputs the guesses
@@ -281,8 +284,7 @@ while(test_data >> row){
     string content = row["content"];
 
     pair<string,double> prediction = classifier.prediction(content);
-    cout <<"  ";
-    cout << "correct = " << correct_tag << ", ";
+    cout <<"  " << "correct = " << correct_tag << ", ";
     cout << "predicted = " << prediction.first << ", ";
     cout << "log-probability score = " << prediction.second << endl;
     cout << "  content = " << content << endl << endl;
