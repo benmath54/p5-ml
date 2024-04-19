@@ -261,6 +261,38 @@ TEST(test_assignment_error16){
     ASSERT_TRUE(pre.empty());
 }
 
-// COPY CTOR
+TEST(haha_imlosing_it){
+    BinarySearchTree<string> tree;
+    tree.insert("I");
+    tree.insert("Will");
+    tree.insert("Be");
+    tree.insert("There");
+    tree.insert("Coding");
+    tree.insert("Sucks");
+    tree.insert("This");
+    tree.insert("Doesnt");
+    tree.insert("Look");
+    tree.insert("Right");
+    tree.insert("This Will be on my public Github");
+    cout << tree.to_string() << endl;
+
+    ASSERT_EQUAL(tree.size(),11);
+    ASSERT_EQUAL(tree.height(),6);
+    ostringstream oss_preorder;
+    tree.traverse_preorder(oss_preorder);
+    string pre = oss_preorder.str();
+    string correct = "I Be Coding Doesnt Will There Sucks Look Right"
+    " This This Will be on my public Github ";
+    ASSERT_EQUAL(pre,correct);
+
+    ostringstream oss_inorder;
+    tree.traverse_inorder(oss_inorder);
+    string ino = oss_inorder.str();
+    string ino_correct = "Be Coding Doesnt I Look Right Sucks "
+    "There This This Will be on my public Github Will ";
+    ASSERT_EQUAL(ino,ino_correct);
+
+    
+}
 
 TEST_MAIN()
